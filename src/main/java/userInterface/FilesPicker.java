@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class FilesPicker extends JDialog{
@@ -41,11 +43,16 @@ public class FilesPicker extends JDialog{
 	private JFileChooser fileChooser;
 	
 	public FilesPicker() {
-		
-		this.filePathUserLog = filePathUserLog;
-		this.filePathDeviceLog = filePathDeviceLog;
-		this.filePathHttpLog = filePathHttpLog;
-		this.filePathLogonLog = filePathLogonLog;
+		filePathUserLog = null;
+		filePathDeviceLog = null;
+		filePathHttpLog = null;
+		filePathLogonLog = null;
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		setModal(true);
 		
@@ -130,6 +137,8 @@ public class FilesPicker extends JDialog{
 						filePathDeviceLog = textFieldDeviceLog.getText();
 						filePathHttpLog = textFieldHttpLog.getText();
 						filePathLogonLog = textFieldLogonLog.getText();
+						
+						setVisible(false);
 					}
 				}
 		);
@@ -139,11 +148,7 @@ public class FilesPicker extends JDialog{
 		buttonCancel.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
-						try {
-							dispose();
-						} catch (Throwable e) {
-							e.printStackTrace();
-						}
+						setVisible(false);
 					}
 				}
 		);
@@ -173,5 +178,9 @@ public class FilesPicker extends JDialog{
 				textFieldLogPath.setText( fileChooser.getSelectedFile().getAbsolutePath() );
 			}
 		}
+	}
+	
+	public String getUserLogPath(){
+		return filePathUserLog; 
 	}
 }

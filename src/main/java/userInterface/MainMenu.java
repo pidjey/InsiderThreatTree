@@ -16,8 +16,17 @@ public class MainMenu extends JFrame{
 	private String filePathDeviceLog;
 	private String filePathHttpLog;
 	private String filePathLogonLog;
+	private FilesPicker filesPicker;
 	
 	public MainMenu() {
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		filePathUserLog = null;
 		filePathDeviceLog = null;
 		filePathHttpLog = null;
@@ -36,11 +45,11 @@ public class MainMenu extends JFrame{
 	public void createView() {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
-		
+		filesPicker = new FilesPicker();
 		buttonPickFiles = new JButton("Pick Files");
 		buttonPickFiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FilesPicker.executeUI();
+				filesPicker.setVisible(true);
 				
 			}
 		});
@@ -50,12 +59,7 @@ public class MainMenu extends JFrame{
 		buttonLoadUsers.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				if(filePathUserLog == null ||
-						filePathDeviceLog == null ||
-						filePathHttpLog == null ||
-						filePathLogonLog == null){
-					JOptionPane.showMessageDialog(null, "Files path have not been set");
-				}
+					System.out.println(filesPicker.getUserLogPath());
 				
 			}
 		});

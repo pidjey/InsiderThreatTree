@@ -40,11 +40,13 @@ public class InsiderThreatTrees {
 	{
 		UserReader userReader = new UserReader(file);
 		String csvLine = userReader.getNextLine();
+		
 		Pattern p = Pattern.compile("/employee_name|user_id|domain|email|role/i");
 		Matcher m = p.matcher( csvLine );
 		if(!m.find()) {
 			createUserNode( (User) userReader.stringsToClass( userReader.parseCsvLine( csvLine ) ) );
 		}
+		
 		while(csvLine != null)
 		{
 			createUserNode( (User) userReader.stringsToClass( userReader.parseCsvLine( csvLine ) ) );
