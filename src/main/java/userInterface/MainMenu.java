@@ -13,11 +13,30 @@ import logReaders.UserReader;
 
 public class MainMenu extends JFrame{
 
+	private JLabel labelEmpty;
+	private JLabel emptySpace(int width, int height) { 
+		JLabel empty = new JLabel("");
+		empty.setPreferredSize(new Dimension(width, height));
+		return empty; 
+	}
+	
 	private JButton buttonPickFiles;
+	
 	private JButton buttonLoadUsers;
+	
+	private JLabel labelSelectTime;
+	private JButton buttonLoadActivities;
+	private JButton buttonSelectTimeBegin;
+	private JButton buttonSelectTimeEnd;
+	
+	private JButton buttonVisualizeUsers;
+	
 	private FilesPicker filesPicker;
 	
 	private UserTrees userTrees;
+	
+	private static int WINDOW_SIZE_WIDTH = 500;
+	private static int WINDOW_SIZE_HEIGHT = 400;
 	
 	public MainMenu() {
 		
@@ -34,13 +53,16 @@ public class MainMenu extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setSize(150, 180);
+		setSize(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT);
 		
 	}
 	
 	private void createView() {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
+		
+
+		panel.add(emptySpace(WINDOW_SIZE_WIDTH - 110,15));
 		filesPicker = new FilesPicker();
 		buttonPickFiles = new JButton("Pick Files");
 		buttonPickFiles.addActionListener(new ActionListener() {
@@ -50,6 +72,7 @@ public class MainMenu extends JFrame{
 		});
 		panel.add(buttonPickFiles);
 		
+		panel.add(emptySpace(WINDOW_SIZE_WIDTH - 110, 15));
 		buttonLoadUsers = new JButton("Load files");
 		buttonLoadUsers.addActionListener(new ActionListener() {
 			
@@ -65,12 +88,24 @@ public class MainMenu extends JFrame{
 					userreader.loadUsersFromCsv(userTrees);
 					JOptionPane.showMessageDialog(null, "Done!");
 				}
-					
-				
 			}
 		});
-		
 		panel.add(buttonLoadUsers);
+		
+		labelSelectTime = new JLabel("Select time period:");
+		labelSelectTime.setPreferredSize(new Dimension(WINDOW_SIZE_WIDTH - 270,15));
+		buttonSelectTimeBegin = new JButton("Begin");
+		buttonSelectTimeEnd = new JButton("End");
+		buttonLoadActivities = new JButton("Load Activities");
+		panel.add(labelSelectTime);
+		panel.add(buttonSelectTimeBegin);
+		panel.add(buttonSelectTimeEnd);
+		panel.add(buttonLoadActivities);
+		
+		panel.add(emptySpace(WINDOW_SIZE_WIDTH - 140, 15));
+		buttonVisualizeUsers = new JButton("Visualize Users");
+		panel.add(buttonVisualizeUsers);
+		
 	}
 	
 	public static void executeUI() {
