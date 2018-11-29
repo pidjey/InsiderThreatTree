@@ -8,15 +8,16 @@ import java.io.File;
 
 import javax.swing.*;
 
+import dataManipulators.UserTrees;
+import logReaders.UserReader;
+
 public class MainMenu extends JFrame{
 
 	private JButton buttonPickFiles;
 	private JButton buttonLoadUsers;
-	private String filePathUserLog;
-	private String filePathDeviceLog;
-	private String filePathHttpLog;
-	private String filePathLogonLog;
 	private FilesPicker filesPicker;
+	
+	private UserTrees userTrees;
 	
 	public MainMenu() {
 		
@@ -26,11 +27,6 @@ public class MainMenu extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		filePathUserLog = null;
-		filePathDeviceLog = null;
-		filePathHttpLog = null;
-		filePathLogonLog = null;
 		
 		createView();
 		
@@ -42,7 +38,7 @@ public class MainMenu extends JFrame{
 		
 	}
 	
-	public void createView() {
+	private void createView() {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 		filesPicker = new FilesPicker();
@@ -50,7 +46,6 @@ public class MainMenu extends JFrame{
 		buttonPickFiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filesPicker.setVisible(true);
-				
 			}
 		});
 		panel.add(buttonPickFiles);
@@ -59,7 +54,18 @@ public class MainMenu extends JFrame{
 		buttonLoadUsers.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-					System.out.println(filesPicker.getUserLogPath());
+				
+				if( filesPicker.getUserLogPath()==null || filesPicker.getDeviceLogPath()==null || 
+						filesPicker.getHttpLogPath() == null || filesPicker.getLogonLogPath()==null )
+				{
+					JOptionPane.showMessageDialog(null, "Files path have not been set");
+				}else {
+					userTrees = new UserTrees();
+					UserReader userreader = new UserReader(filesPicker.getUserLogPath());
+					userreader.loadUsersFromCsv(userTrees);
+					JOptionPane.showMessageDialog(null, "Done!");
+				}
+					
 				
 			}
 		});
@@ -73,19 +79,6 @@ public class MainMenu extends JFrame{
 				new MainMenu().setVisible(true);
 			}
 		});
-	}
-	
-	public void setFilePathUserLog(String filePathUserLog){
-		this.filePathUserLog = filePathUserLog;
-	}
-	public void filePathDeviceLog(String filePathDeviceLog){
-		this.filePathDeviceLog = filePathDeviceLog;
-	}
-	public void filePathHttpLog(String filePathHttpLog){
-		this.filePathHttpLog = filePathHttpLog;
-	}
-	public void filePathLogonLog(String filePathLogonLog){
-		this.filePathLogonLog = filePathLogonLog;
 	}
 	
 }

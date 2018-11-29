@@ -34,17 +34,30 @@ public class Node<T>{
 		return children.get(pos);
 	}
 	
-	public void addChild(T data){
+	public List<Node<T>> getChildren(){
+		return children;
+		
+	}
+	public int getChildrenSize() {
+		return children.size();
+	}
+	
+	public Node<T> addChild(T data){
 		children.add( new Node<T>(data, this) );
+		
+		return getChild(children.size()-1);
 	}
 
-	public void addChild(T data, int pos){
+	public Node<T> addChild(T data, int pos){
 		children.add( pos, new Node<T>(data,this) );
+		
+		return getChild(pos);
 	}
 
 	public void removeChild(int pos){
 		children.remove(pos);
 	}
+	
 
 	
 }

@@ -183,4 +183,13 @@ public class FilesPicker extends JDialog{
 	public String getUserLogPath(){
 		return filePathUserLog; 
 	}
+	public String getDeviceLogPath(){
+		return filePathDeviceLog; 
+	}
+	public String getHttpLogPath(){
+		return filePathHttpLog; 
+	}
+	public String getLogonLogPath(){
+		return filePathLogonLog; 
+	}
 }
